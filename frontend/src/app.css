@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app {
+    @apply w-full;
+    @apply h-full;
+}
+
+.body-wrapper {
+    @apply fixed;
+    /*@apply top-16;*/
+    @apply top-0;
+    /*@apply bottom-12;*/
+    @apply bottom-0;
+    @apply w-full;
+    @apply overflow-y-scroll;
+
+    @apply flex;
+    @apply flex-col;
+    @apply items-center;
+}
