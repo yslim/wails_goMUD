@@ -1,6 +1,7 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import 'xterm/css/xterm.css';
+    import {EventsOn} from "$lib/wailsjs/runtime";
     import {Send} from "$lib/wailsjs/go/service/MudService";
 
     let terminalElement: HTMLElement;
@@ -46,10 +47,10 @@
             terminal.write(e);
         })
 
-        for (let i=0; i<100; i++) {
-            terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
-            terminal.write("\n\r");
-        }
+        // for (let i=0; i<100; i++) {
+        //     terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+        //     terminal.write("\n\r");
+        // }
     }
 
     onMount(() => {
@@ -62,6 +63,10 @@
             inputBuffer = "";
         }
     }
+
+    EventsOn("OnMessage", (message: string) => {
+       terminal.write(message);
+    });
 </script>
 
 <svelte:head>

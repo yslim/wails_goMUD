@@ -23,7 +23,7 @@ type tSocket struct {
 
 type tMud struct {
     Server string `properties:"server,default=toox.co.kr"`
-    Port   int    `properties:"port,default=5800"`
+    Port   uint16 `properties:"port,default=5800"`
 }
 
 type defaults struct {

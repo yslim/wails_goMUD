@@ -13,7 +13,7 @@ import (
     "goMUD/pkg/log"
 )
 
-func Run(assets embed.FS) {
+func run(assets embed.FS) {
     err := wails.Run(&options.App{
         Title:  config.Defaults.Application,
         Width:  1024,
