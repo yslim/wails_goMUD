@@ -21,7 +21,8 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+// SendCommand send input command to MUD server
+func (a *App) SendCommand(command string) bool {
+	fmt.Printf("command: %s\n", command)
+	return true
 }

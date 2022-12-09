@@ -8,7 +8,7 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 )
 
-//go:embed all:frontend/dist
+//go:embed all:frontend/build
 var assets embed.FS
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "mud-client",
+		Title:  "goMUD",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{

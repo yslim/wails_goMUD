@@ -1,11 +1,16 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import 'xterm/css/xterm.css';
+    import {SendCommand} from "$lib/wailsjs/go/main/App";
 
     let terminalElement: HTMLElement;
     let isResizing = false;
     let terminal: any;
+    let inputBuffer = "";
 
+    function greet(name:string): void {
+
+    }
     async function initTerminal() {
         // import package dynamically
         const xterm = await import("xterm");
@@ -53,6 +58,13 @@
     onMount(() => {
         initTerminal();
     });
+
+    function onKeyPress (event:KeyboardEvent) {
+        if (event.key === "Enter") {
+            SendCommand(inputBuffer);
+            inputBuffer = "";
+        }
+    }
 </script>
 
 <svelte:head>
@@ -62,7 +74,11 @@
 <div class="output-layer" bind:this={terminalElement}></div>
 <div class="w-full h-2 bg-gray-400"></div>
 <div class="input-layer">
-    <input type="text" class="input input-bordered w-full bg-black h-20"/>
+    <input type="text"
+           bind:value={inputBuffer}
+           on:keypress={onKeyPress}
+           class="input input-bordered w-full bg-black h-20"
+    />
 </div>
 
 <style>
