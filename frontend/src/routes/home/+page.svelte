@@ -7,21 +7,27 @@
     let terminal: any;
 
     async function initTerminal() {
+        // import package dynamically
         const xterm = await import("xterm");
         const fit = await import("xterm-addon-fit");
         const webLinksAddon = await import("xterm-addon-web-links");
+
+        // import classes
         const { Terminal } = xterm;
         const { FitAddon } = fit;
         const { WebLinksAddon } = webLinksAddon;
+
+        // init terminal & addons
         terminal = new Terminal({allowProposedApi: true});
         const termFit = new FitAddon();
-        // Load WebLinksAddon on terminal, this is all that's needed to get web links
-        // working in the terminal.
         terminal.loadAddon(new WebLinksAddon());
         terminal.loadAddon(termFit);
+
+        // open terminal in DOM
         terminal.open(terminalElement);
         termFit.fit();
 
+        // resize event handler
         window.addEventListener ("resize", (event: Event) => {
             if (isResizing)
                 return;
@@ -33,6 +39,7 @@
             }, 500);
         });
 
+        // paste (CMD-V) data
         terminal.onData((e) => {
             terminal.write(e);
         })
