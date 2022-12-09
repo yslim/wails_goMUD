@@ -1,7 +1,7 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import 'xterm/css/xterm.css';
-    import {EventsOn} from "$lib/wailsjs/runtime";
+    import {EventsEmit, EventsOn} from "$lib/wailsjs/runtime";
     import {Send} from "$lib/wailsjs/go/service/MudService";
 
     let terminalElement: HTMLElement;
@@ -53,8 +53,9 @@
         // }
     }
 
-    onMount(() => {
-        initTerminal();
+    onMount(async () => {
+        await initTerminal();
+        EventsEmit("OnReady")
     });
 
     function onKeyPress (event:KeyboardEvent) {

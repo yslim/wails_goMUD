@@ -9,6 +9,7 @@ import (
     "github.com/wailsapp/wails/v2/pkg/options/linux"
     "github.com/wailsapp/wails/v2/pkg/options/mac"
     "github.com/wailsapp/wails/v2/pkg/options/windows"
+    "github.com/wailsapp/wails/v2/pkg/runtime"
     "github.com/yslim/go-util"
     "goMUD/pkg/app"
     "goMUD/pkg/config"
@@ -41,15 +42,16 @@ func main() {
         OnStartup: func(ctx context.Context) {
             app.App().SetCtx(ctx)
             log.Info("WAILS START UP")
+            runtime.EventsOn(ctx, "OnReady", func(optionalData ...interface{}) {
+                err := service.GetMudService().Connect("KanghoMurim")
+                if err != nil {
+                    log.Error("MUD connect error = ", err)
+                }
+            })
         },
         OnDomReady: func(ctx context.Context) {
             app.App().SetCtx(ctx)
             log.Info("WAILS DOM READY")
-
-            err := service.GetMudService().Connect("KanghoMurim")
-            if err != nil {
-                log.Error("MUD connect error = ", err)
-            }
         },
         OnBeforeClose: func(ctx context.Context) (prevent bool) {
             app.App().SetCtx(ctx)

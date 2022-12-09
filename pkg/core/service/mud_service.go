@@ -68,7 +68,7 @@ func onTcpEvent(incomingChan chan *socket.TcpEvent) {
 
 func onMessageFromTcp(conn *socket.Connection, bytes []byte) {
     utfStr, _ := util.ToUTF8("euc-kr", bytes)
-    message := strings.TrimSpace(string(utfStr))
+    message := strings.TrimSpace(string(utfStr)) + "\n\r"
 
     fmt.Printf("message = %s", message)
 
