@@ -1,36 +1,26 @@
 package main
 
 import (
-	"embed"
-
-	"github.com/wailsapp/wails/v2"
-	"github.com/wailsapp/wails/v2/pkg/options"
-	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+    "embed"
+    "github.com/yslim/go-util"
+    "goMUD/pkg/config"
+    "goMUD/pkg/log"
+    "goMUD/pkg/wails"
 )
 
 //go:embed all:frontend/build
 var assets embed.FS
 
+func init() {
+    log.Init(config.Log)
+    log.Info("### active profile : %s", config.Profile.Active)
+    log.Info("### logging level  : %s", config.Log.Level)
+    log.Info("### IsDev = %v", config.IsDev)
+    log.Info("### MUD Server = %v:%v", config.Mud.Server, config.Mud.Port)
+    log.Info("### socket buffer-size=%s, %s Bytes",
+        config.Socket.BufferSizeStr, util.RenderInteger(config.Socket.BufferSize))
+}
+
 func main() {
-	// Create an instance of the app structure
-	app := NewApp()
-
-	// Create application with options
-	err := wails.Run(&options.App{
-		Title:  "goMUD",
-		Width:  1024,
-		Height: 768,
-		AssetServer: &assetserver.Options{
-			Assets: assets,
-		},
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
-		OnStartup:        app.startup,
-		Bind: []interface{}{
-			app,
-		},
-	})
-
-	if err != nil {
-		println("Error:", err.Error())
-	}
+    wails.Run(assets)
 }

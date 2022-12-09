@@ -1,8 +1,13 @@
-module changeme
+module goMUD
 
 go 1.18
 
-require github.com/wailsapp/wails/v2 v2.2.0
+require (
+	github.com/magiconair/properties v1.8.7
+	github.com/wailsapp/wails/v2 v2.2.0
+	github.com/yslim/go-logger v1.0.8
+	github.com/yslim/go-util v1.0.5
+)
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect
