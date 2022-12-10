@@ -2,11 +2,9 @@
   "$schema": "https://wails.io/schemas/config.v2.json",
   "name": "goMUD",
   "outputfilename": "goMUD",
-  "wailsjsdir": "frontend/src/lib",
-  "frontend:install": "npm install",
+  "wailsjsdir": "frontend/src",
+  "frontend:install": "pnpm install",
   "frontend:build": "npm run build",
-  "frontend:dev:watcher": "npm run dev",
-  "frontend:dev:serverUrl": "auto",
   "author": {
     "name": "yslim",
     "email": "yslim@mulbul.com"
