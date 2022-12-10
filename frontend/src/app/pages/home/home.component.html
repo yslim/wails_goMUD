@@ -1,0 +1,10 @@
+<div class="flex flex-col h-full">
+    <div class="output-layer" #term></div>
+    <div class="w-full h-2 bg-gray-400"></div>
+    <div class="input-layer">
+        <input type="text" [(ngModel)]="inputBuffer"
+               (keydown)="onKeyDown($event)"
+               class="input input-bordered w-full bg-black h-20"
+        />
+    </div>
+</div>

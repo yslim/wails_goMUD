@@ -16,6 +16,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "xterm",
+              "xterm-addon-fit"
+            ],
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -28,6 +32,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/xterm/css/xterm.css",
               "src/styles.css"
             ],
             "scripts": []

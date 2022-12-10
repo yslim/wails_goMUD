@@ -1,0 +1,9 @@
+.body-wrapper {
+    @apply fixed;
+    /*@apply top-16;*/
+    @apply top-0;
+    /*@apply bottom-12;*/
+    @apply bottom-0;
+    @apply w-full;
+    @apply overflow-y-scroll;
+}

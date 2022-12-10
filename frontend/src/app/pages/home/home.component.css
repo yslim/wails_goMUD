@@ -1,0 +1,15 @@
+.output-layer {
+    @apply w-full;
+    @apply h-full;
+    @apply bg-black;
+    @apply text-white;
+    padding: 0 0 0 1rem;
+}
+.input-layer {
+    @apply p-1.5;
+    @apply w-full;
+    @apply h-fit;
+    background-color: #333;
+    color: white;
+    @apply rounded-none;
+}
