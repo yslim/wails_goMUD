@@ -3,6 +3,7 @@
   "name": "goMUD",
   "outputfilename": "goMUD",
   "wailsjsdir": "frontend/src",
+  "assetdir": "frontend/dist",
   "frontend:install": "pnpm install",
   "frontend:build": "pnpm run build",
   "author": {
