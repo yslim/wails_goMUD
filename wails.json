@@ -4,7 +4,7 @@
   "outputfilename": "goMUD",
   "wailsjsdir": "frontend/src",
   "frontend:install": "pnpm install",
-  "frontend:build": "npm run build",
+  "frontend:build": "pnpm run build",
   "author": {
     "name": "yslim",
     "email": "yslim@mulbul.com"

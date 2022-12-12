@@ -8,7 +8,7 @@ import (
     "strings"
 
     "github.com/magiconair/properties"
-    util "github.com/yslim/go-util"
+    "github.com/yslim/go-util"
     "goMUD/pkg/log"
 )
 
@@ -70,7 +70,7 @@ func showUsage() {
 
 // parse command line option and load config files
 func (c *config) parse() bool {
-    flag.StringVar(&c.Flags.CfgFile, "c", "${APP_HOME}/etc/goMUD/application.properties", "config file")
+    flag.StringVar(&c.Flags.CfgFile, "c", "/Volumes/Data/apphome/etc/goMUD/application.properties", "config file")
     help := flag.Bool("h", false, "help info")
 
     flag.Parse()
