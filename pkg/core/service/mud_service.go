@@ -62,6 +62,8 @@ func onTcpEvent(incomingChan chan *socket.TcpEvent) {
             log.Info("TCP Connected, RemoteAddr=%v", string(tcpEvent.Message))
         } else if tcpEvent.MType == socket.Closed {
             log.Info("TCP Closed, reason=%v", string(tcpEvent.Message))
+            runtime.EventsEmit(app.App().Ctx(), "OnMessage",
+                "\n\rConnection Closed, reason = "+string(tcpEvent.Message))
         } else {
             onMessageFromTcp(tcpEvent.Conn, tcpEvent.Message[:tcpEvent.MsgLen])
         }

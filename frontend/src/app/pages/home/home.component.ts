@@ -18,7 +18,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
   windowResizeSubs: Subscription | undefined;
 
   ngOnInit(): void {
-    this.windowResizeSubs = windowSizeObserver().subscribe(({width, height}) => {
+    this.windowResizeSubs = windowSizeObserver(500).subscribe(({width, height}) => {
       this.termFit?.fit();
     })
 
@@ -43,9 +43,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
     // open terminal in DOM
     this.terminal.open(this.terminalElement.nativeElement);
-    setTimeout(() => {
-      this.termFit?.fit();
-    }, 1000);
+    this.termFit.fit();
 
     this.terminal.onData((data) => {
       this.terminal?.write(data);
