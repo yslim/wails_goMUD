@@ -12,4 +12,5 @@ type TcpEvent struct {
     MType   MsgType
     Conn    *Connection
     Message []byte
+    MsgLen  int
 }

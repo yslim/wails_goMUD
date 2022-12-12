@@ -8,14 +8,16 @@ import (
     "goMUD/pkg/config"
     "goMUD/pkg/log"
     "goMUD/pkg/socket"
-    "strings"
 )
 
 type MudService struct {
     *socket.Connection
 }
 
-var mudService = &MudService{nil}
+var (
+    mudService = &MudService{nil}
+    rBuff      = make([]byte, 4096)
+)
 
 func GetMudService() *MudService {
     return mudService
@@ -29,7 +31,7 @@ func (m *MudService) Connect(name string) error {
 
     tcpMesgChannel := make(chan *socket.TcpEvent, 100)
 
-    m.Connection = socket.NewConnection(tcpConn, tcpMesgChannel)
+    m.Connection = socket.NewConnection(tcpConn, tcpMesgChannel, rBuff)
 
     go onTcpEvent(tcpMesgChannel)
 
@@ -61,14 +63,15 @@ func onTcpEvent(incomingChan chan *socket.TcpEvent) {
         } else if tcpEvent.MType == socket.Closed {
             log.Info("TCP Closed, reason=%v", string(tcpEvent.Message))
         } else {
-            onMessageFromTcp(tcpEvent.Conn, tcpEvent.Message)
+            onMessageFromTcp(tcpEvent.Conn, tcpEvent.Message[:tcpEvent.MsgLen])
         }
     }
 }
 
 func onMessageFromTcp(conn *socket.Connection, bytes []byte) {
     utfStr, _ := util.ToUTF8("euc-kr", bytes)
-    message := strings.TrimSpace(string(utfStr)) + "\n\r"
+    //message := strings.TrimSpace(string(utfStr)) + "\n\r"
+    message := string(utfStr)
 
     fmt.Printf("message = %s", message)
 

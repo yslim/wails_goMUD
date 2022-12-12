@@ -20,12 +20,29 @@ func (conn *Connection) SendMessage(bytes []byte) {
     conn.outgoing <- bytes
 }
 
-func (conn *Connection) listen() {
-    go conn.read()
+func (conn *Connection) listen(bytes []byte) {
+    if bytes == nil {
+        go conn.readln()
+    } else {
+        go conn.read(bytes)
+    }
     go conn.write()
 }
 
-func (conn *Connection) read() {
+func (conn *Connection) read(bytes []byte) {
+    for {
+        n, err := conn.reader.Read(bytes)
+        if err != nil {
+            conn.Close()
+            conn.incoming <- &TcpEvent{MType: Closed, Conn: conn, Message: []byte(err.Error())}
+            break
+        } else {
+            conn.incoming <- &TcpEvent{MType: Messgae, Conn: conn, Message: bytes, MsgLen: n}
+        }
+    }
+}
+
+func (conn *Connection) readln() {
     for {
         line, err := conn.reader.ReadBytes('\n')
         if err != nil {
@@ -33,7 +50,7 @@ func (conn *Connection) read() {
             conn.incoming <- &TcpEvent{MType: Closed, Conn: conn, Message: []byte(err.Error())}
             break
         } else {
-            conn.incoming <- &TcpEvent{MType: Messgae, Conn: conn, Message: line}
+            conn.incoming <- &TcpEvent{MType: Messgae, Conn: conn, Message: line, MsgLen: len(line)}
         }
     }
 }
@@ -50,7 +67,10 @@ func (conn *Connection) write() {
     }
 }
 
-func NewConnection(tcpConn *net.TCPConn, callbackChan chan *TcpEvent) *Connection {
+// NewConnection new tcp connection
+// rBuff: nil if read until '\n'
+//        not nil if read bytes to rBuff
+func NewConnection(tcpConn *net.TCPConn, callbackChan chan *TcpEvent, rBuff []byte) *Connection {
     _ = tcpConn.SetReadBuffer(config.Socket.BufferSize)
     _ = tcpConn.SetNoDelay(true)
 
@@ -71,7 +91,7 @@ func NewConnection(tcpConn *net.TCPConn, callbackChan chan *TcpEvent) *Connectio
 
     conn.incoming <- &TcpEvent{MType: Connected, Conn: conn, Message: []byte(tcpConn.RemoteAddr().String())}
 
-    conn.listen()
+    conn.listen(rBuff)
 
     return conn
 }

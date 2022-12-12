@@ -34,6 +34,6 @@ func (s *TcpServer) Run() {
             continue
         }
 
-        NewConnection(tcpConn, s.IncomingChan)
+        NewConnection(tcpConn, s.IncomingChan, nil)
     }
 }
