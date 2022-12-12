@@ -43,10 +43,12 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
     // open terminal in DOM
     this.terminal.open(this.terminalElement.nativeElement);
-    this.termFit.fit();
+    setTimeout(() => {
+      this.termFit?.fit();
+    }, 1000);
 
     this.terminal.onData((data) => {
-      this.terminal!.write(data);
+      this.terminal?.write(data);
     });
 
     EventsEmit("OnReady");
